@@ -3,6 +3,7 @@
     "description": "Simple comment system for Laravel 13 with AJAX support",
     "type": "library",
     "license": "MIT",
+    "version": "1.0.0",
     "keywords": [
         "laravel",
         "comments",
