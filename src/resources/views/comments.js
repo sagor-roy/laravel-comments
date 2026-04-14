@@ -6,7 +6,13 @@ document.addEventListener('DOMContentLoaded', function() {
             const replyForm = document.getElementById('reply-form-' + commentId);
             
             if (replyForm) {
-                replyForm.style.display = replyForm.style.display === 'none' ? 'block' : 'none';
+                const isHidden = replyForm.style.display === 'none' || !replyForm.style.display;
+                replyForm.style.display = isHidden ? 'block' : 'none';
+                
+                if (isHidden) {
+                    const textarea = replyForm.querySelector('textarea');
+                    if (textarea) textarea.focus();
+                }
             }
         });
     });
@@ -36,9 +42,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 if (data.success) {
                     if (commentElement) {
-                        commentElement.remove();
+                        commentElement.style.opacity = '0';
+                        commentElement.style.transform = 'translateX(-20px)';
+                        commentElement.style.transition = 'all 0.3s ease';
+                        setTimeout(() => {
+                            commentElement.remove();
+                            location.reload();
+                        }, 300);
+                    } else {
+                        location.reload();
                     }
-                    location.reload();
                 } else {
                     alert(data.message || 'Error deleting comment');
                 }

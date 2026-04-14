@@ -2,14 +2,23 @@
 
 <div class="comment" id="comment-{{ $comment->id }}">
     <div class="comment-header">
-        <div class="comment-author">
-            @if($comment->user)
-                <span class="comment-user-name">{{ $comment->user->name ?? 'User' }}</span>
-            @else
-                <span class="comment-guest-name">{{ $comment->guest_name ?? 'Guest' }}</span>
-            @endif
+        <div class="comment-author-info">
+            <div class="comment-avatar">
+                @if($comment->user)
+                    {{ strtoupper(substr($comment->user->name ?? 'U', 0, 2)) }}
+                @else
+                    {{ strtoupper(substr($comment->guest_name ?? 'G', 0, 2)) }}
+                @endif
+            </div>
+            <div class="comment-author">
+                @if($comment->user)
+                    <span class="comment-user-name">{{ $comment->user->name ?? 'User' }}</span>
+                @else
+                    <span class="comment-guest-name">{{ $comment->guest_name ?? 'Guest' }}</span>
+                @endif
+                <span class="comment-date">{{ $comment->created_at->diffForHumans() }}</span>
+            </div>
         </div>
-        <span class="comment-date">{{ $comment->created_at->diffForHumans() }}</span>
     </div>
     
     <div class="comment-content">

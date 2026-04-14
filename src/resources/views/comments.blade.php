@@ -1,7 +1,10 @@
 @props(['model', 'options' => []])
 
 <div class="comments-section" data-model-type="{{ get_class($model) }}" data-model-id="{{ $model->id }}">
-    <h3 class="comments-title">{{ trans('comments::comments.comments') }} ({{ $model->comments->count() }})</h3>
+    <h3 class="comments-title">
+        {{ trans('comments::comments.comments') }}
+        <span class="comments-count">{{ $model->comments->count() }}</span>
+    </h3>
     
     @include('comments::partials._form', ['model' => $model, 'parentId' => null])
     
