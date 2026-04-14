@@ -6,7 +6,10 @@
         <span class="comments-count">{{ $model->comments->count() }}</span>
     </h3>
     
-    @include('comments::partials._form', ['model' => $model, 'parentId' => null])
+    <div class="comment-form-inline">
+        <img class="comment-avatar" src="https://ui-avatars.com/api/?name={{ urlencode(auth()->user()?->name ?? 'U') }}&background=random&color=fff" alt="You">
+        @include('comments::partials._form', ['model' => $model, 'parentId' => null])
+    </div>
     
     <div class="comments-list">
         @forelse($model->comments as $comment)

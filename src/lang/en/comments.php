@@ -3,7 +3,8 @@
 return [
     'comment' => 'Comment',
     'comments' => 'Comments',
-    'post_comment' => 'Post Comment',
+    'post_comment' => 'Post',
+    'post_reply' => 'Reply',
     'reply' => 'Reply',
     'reply_to' => 'Reply to :name',
     'cancel' => 'Cancel',

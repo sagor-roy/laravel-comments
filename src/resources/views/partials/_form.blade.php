@@ -1,17 +1,17 @@
 @props(['model', 'parentId' => null])
 
-<form action="{{ route('comments.store') }}" method="POST" class="comment-form" data-parent-id="{{ $parentId }}">
+<form action="{{ route('comments.store') }}" method="POST" class="comment-form-inline-main" data-parent-id="{{ $parentId }}">
     @csrf
     
     <input type="hidden" name="commentable_type" value="{{ get_class($model) }}">
     <input type="hidden" name="commentable_id" value="{{ $model->id }}">
     <input type="hidden" name="parent_id" value="{{ $parentId }}">
     
-    <div class="form-group">
+    <div class="comment-form-content">
         <textarea 
             name="content" 
             class="comment-textarea" 
-            rows="3"
+            rows="1"
             placeholder="{{ trans('comments::comments.placeholder') }}"
             required
             maxlength="{{ config('comments.max_length', 1000) }}"
@@ -51,7 +51,7 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const parentId = {{ json_encode($parentId ?? 'main') }};
-    const form = document.querySelector('.comment-form[data-parent-id="' + parentId + '"]');
+    const form = document.querySelector('.comment-form-inline-main[data-parent-id="' + parentId + '"]');
     if (!form) return;
     
     form.addEventListener('submit', async function(e) {
@@ -60,8 +60,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const formData = new FormData(this);
         const submitBtn = this.querySelector('button[type="submit"]');
         const errorDiv = document.getElementById('form-error-' + parentId);
-        const csrfToken = document.querySelector('meta[name="csrf-token"]') ? document.querySelector('meta[name="csrf-token"]').content : 
-                         (document.querySelector('input[name="_token"]') ? document.querySelector('input[name="_token"]').value : '');
+        const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content || 
+                         document.querySelector('input[name="_token"]')?.value || '';
         
         submitBtn.disabled = true;
         submitBtn.textContent = '...';
